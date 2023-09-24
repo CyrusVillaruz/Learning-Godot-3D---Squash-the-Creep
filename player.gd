@@ -20,3 +20,12 @@ func _physics_process(delta):
 	if (direction != Vector3.ZERO):
 		direction = direction.normalized()
 		$Pivot.look_at(position + direction, Vector3.UP)
+	
+	target_velocity.x = direction.x * speed
+	target_velocity.z = direction.z * speed
+	
+	if not is_on_floor():
+		target_velocity.y = target_velocity.y - (fall_acceleration * delta)
+		
+	velocity = target_velocity
+	move_and_slide()
